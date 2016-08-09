@@ -40,3 +40,19 @@ return
 ;change the volume
 ^!PgUp::Send {Volume_Up 3}
 ^!PgDn::Send {Volume_Down 3}
+
+;Add media keys
+;next song
+!Right::Send {Media_Next}
+
+;previous song
+!Left::Send {Media_Prev}
+
+;play/pause
+!Down::Send {Media_Play_Pause}
+
+;volumne down
+!NumpadSub::Send {Volume_Down}
+
+;volumne up
+!NumpadAdd::Send {Volume_Up}
