@@ -2,10 +2,9 @@
 #Persistent	;this keeps the script running if no hotkeys are set (though one is)
 
 ;Set the Toggle to the correct value the first time the script starts
-;This can be put before Toggle is toggeled, if you change the device yourself regularly
+;This can be put before Toggle is toggled, if you change the device yourself regularly
 curDeviceName := VA_GetDeviceName(VA_GetDevice("playback"))
-firstDeviceName := VA_GetDeviceName(VA_GetDevice("Speakers"))
-Toggle := curDeviceName != firstDeviceName
+Toggle := curDeviceName != "Speakers (Realtek High Definition Audio)"
 
 ;SETS THE TRAY ICON, ADDS AN OPTION TO RUN THE SCRIPT FROM THE TRAY
 Menu, Tray, Icon, speak.ico,,1								;default is speaker icon
@@ -32,7 +31,7 @@ VA_SetDefaultEndpoint("Realtek HD Audio 2nd output", 0)
 Menu, Tray, Icon, head.ico,,1
 }
 else {
-VA_SetDefaultEndpoint("Speakers", 0)
+VA_SetDefaultEndpoint("Speakers (Realtek High Definition Audio)", 0)
 Menu, Tray, Icon, speak.ico,,1
 }
 return
