@@ -11,7 +11,7 @@ VA_SetDefaultEndpoint("Headphones", 0)
 ;SETS THE TRAY ICON, ADDS AN OPTION TO RUN THE SCRIPT FROM THE TRAY
 Menu, Tray, Icon, headphones.png,,1								;default is speaker icon
 Menu, Tray, NoStandard										;?
-Menu, Tray, Add, &Switch Playback Device, #Pause				;add tray option
+Menu, Tray, Add, &Switch Playback Device, !Pause				;add tray option
 ; Menu, Tray, Add, &Volume Up (Ctrl+Alt+Page Up), ^!PgUp		;add tray option
 ; Menu, Tray, Add, &Volume Down (Ctrl+Alt+Page Down), ^!PgDn	;add tray option
 Menu, Tray, Add, 											;add blank line
@@ -25,7 +25,7 @@ Return
 ;or use VA_SetDefaultEndpoint("playback:" (Toggle ? 4 : 2), 0) (number 4 and 2 are speakers and headset on my pc)
 ;or give devices a pretty name
 
-#Pause::   ;Ctrl+Alt+F11 toggles headphones / speakers
+!Pause::   ;Ctrl+Alt+F11 toggles headphones / speakers 
 Toggle := !Toggle
 
 VA_SetDefaultEndpoint("playback:" (Toggle ? 2 : 1), 0) ; 1 and 2 are my audio devices.
