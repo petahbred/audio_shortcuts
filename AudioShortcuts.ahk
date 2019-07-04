@@ -4,14 +4,16 @@
 ;Set the Toggle to the correct value the first time the script starts
 ;This can be put before Toggle is toggled, if you change the device yourself regularly
 curDeviceName := VA_GetDeviceName(VA_GetDevice("playback"))
-Toggle := curDeviceName != "Speakers (Realtek High Definition Audio)"
+; Toggle := curDeviceName != "Speakers"
+Toggle := !InStr(curDeviceName, "Headphones")
+VA_SetDefaultEndpoint("Headphones", 0)
 
 ;SETS THE TRAY ICON, ADDS AN OPTION TO RUN THE SCRIPT FROM THE TRAY
-Menu, Tray, Icon, speak.ico,,1								;default is speaker icon
+Menu, Tray, Icon, headphones.png,,1								;default is speaker icon
 Menu, Tray, NoStandard										;?
-Menu, Tray, Add, &Switch Playback Device, ^!F11				;add tray option
-Menu, Tray, Add, &Volume Up (Ctrl+Alt+Page Up), ^!PgUp		;add tray option
-Menu, Tray, Add, &Volume Down (Ctrl+Alt+Page Down), ^!PgDn	;add tray option
+Menu, Tray, Add, &Switch Playback Device, #Pause				;add tray option
+; Menu, Tray, Add, &Volume Up (Ctrl+Alt+Page Up), ^!PgUp		;add tray option
+; Menu, Tray, Add, &Volume Down (Ctrl+Alt+Page Down), ^!PgDn	;add tray option
 Menu, Tray, Add, 											;add blank line
 Menu, Tray, Standard										;?
 Menu, Tray, Default, &Switch Playback Device				;default option is new option
@@ -23,35 +25,14 @@ Return
 ;or use VA_SetDefaultEndpoint("playback:" (Toggle ? 4 : 2), 0) (number 4 and 2 are speakers and headset on my pc)
 ;or give devices a pretty name
 
-^!F11::   ;Ctrl+Alt+F11 toggles headphones / speakers
+#Pause::   ;Ctrl+Alt+F11 toggles headphones / speakers
 Toggle := !Toggle
 
+VA_SetDefaultEndpoint("playback:" (Toggle ? 2 : 1), 0) ; 1 and 2 are my audio devices.
 if (Toggle) {
-VA_SetDefaultEndpoint("Realtek HD Audio 2nd output", 0)
-Menu, Tray, Icon, head.ico,,1
+  Menu, Tray, Icon, speaker.png,,1
 }
 else {
-VA_SetDefaultEndpoint("Speakers (Realtek High Definition Audio)", 0)
-Menu, Tray, Icon, speak.ico,,1
+  Menu, Tray, Icon, headphones.png,,1
 }
 return
-
-;change the volume
-^!PgUp::Send {Volume_Up 3}
-^!PgDn::Send {Volume_Down 3}
-
-;Add media keys
-;next song
-!Right::Send {Media_Next}
-
-;previous song
-!Left::Send {Media_Prev}
-
-;play/pause
-!Down::Send {Media_Play_Pause}
-
-;volumne down
-!NumpadSub::Send {Volume_Down}
-
-;volumne up
-!NumpadAdd::Send {Volume_Up}
