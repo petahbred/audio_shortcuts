@@ -25,9 +25,9 @@ Menu, Tray, Standard										;?
 Menu, Tray, Default, Audio Devices				;default option is new option
 Return
 
-OpenAudioDevices:
+OpenAudioDevices() {
   Run, mmsys.cpl
-return
+}
 
 
 ;IsHeadset HEADPHONES AND SPEAKERS
@@ -37,14 +37,17 @@ return
 ;or give devices a pretty name
 
 !Pause::   ;IsHeadsets headphones / speakers 
+  if (IsHeadset) {
+    VA_SetDefaultEndpoint("Speakers", 0)
+    Menu, Tray, Icon, %A_ScriptDir%/speaker.png,,1
+  }
+  else {
+    VA_SetDefaultEndpoint("Headset", 0)
+    Menu, Tray, Icon, %A_ScriptDir%/headphones.png,,1
+  }
+  IsHeadset := !IsHeadset
+return
 
-if (IsHeadset) {
-  VA_SetDefaultEndpoint("Speakers", 0)
-  Menu, Tray, Icon, %A_ScriptDir%/speaker.png,,1
-}
-else {
-  VA_SetDefaultEndpoint("Headset", 0)
-  Menu, Tray, Icon, %A_ScriptDir%/headphones.png,,1
-}
-IsHeadset := !IsHeadset
++!Pause::
+  OpenAudioDevices()
 return
