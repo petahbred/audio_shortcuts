@@ -11,7 +11,7 @@ SetWorkingDir %A_ScriptDir%
 ; curDeviceName := VA_GetDeviceName(VA_GetDevice("playback"))
 ; IsHeadset := curDeviceName != "Speakers"
 ; VA_SetDefaultEndpoint("playback:" 1, 0)
-VA_SetDefaultEndpoint("Headset", 0)
+VA_SetDefaultEndpoint("Headphones", 0)
 IsHeadset := 1
 ;SETS THE TRAY ICON, ADDS AN OPTION TO RUN THE SCRIPT FROM THE TRAY
 Menu, Tray, Icon, %A_ScriptDir%/headphones.png,,1								;default is speaker icon
@@ -42,7 +42,7 @@ OpenAudioDevices() {
     Menu, Tray, Icon, %A_ScriptDir%/speaker.png,,1
   }
   else {
-    VA_SetDefaultEndpoint("Headset", 0)
+    VA_SetDefaultEndpoint("Headphones", 0)
     Menu, Tray, Icon, %A_ScriptDir%/headphones.png,,1
   }
   IsHeadset := !IsHeadset
@@ -50,4 +50,19 @@ return
 
 +!Pause::
   OpenAudioDevices()
+return
+
++!Home::
+  VA_SetDefaultEndpoint("Headphones", 0)
+  Menu, Tray, Icon, %A_ScriptDir%/headphones.png,,1
+return
+
++!End::
+  VA_SetDefaultEndpoint("Headset", 0)
+  Menu, Tray, Icon, %A_ScriptDir%/headset.png,,1
+return
+
++!PgUp::
+  VA_SetDefaultEndpoint("Speakers", 0)
+  Menu, Tray, Icon, %A_ScriptDir%/speaker.png,,1
 return
